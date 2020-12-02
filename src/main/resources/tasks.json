@@ -1,0 +1,9 @@
+{
+	"tasks": [{
+		"taskName":"抓取基金基本信息",
+		"id": "task_04",
+		"url": "http://akshare_server:10002/fund",
+		"valid": "0",
+		"cron": "0 0 20 * * ?"
+	}]
+}

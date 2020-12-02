@@ -1,0 +1,12 @@
+server:
+  port: 10003
+  servlet:
+    context-path: /yliu
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo_server:27017/yliu
+yliu:
+  auth: false
+  cross: false
+
