@@ -4,6 +4,6 @@
 		"id": "task_04",
 		"url": "http://akshare_server:10002/fund",
 		"valid": "0",
-		"cron": "0 0/5 * * * ?"
+		"cron": "0 0 22 * * ?"
 	}]
 }
