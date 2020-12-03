@@ -1,7 +1,7 @@
 package com.yliu.tasks;
 
 import ch.qos.logback.classic.Level;
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yliu.bean.Task;
 import com.yliu.service.TaskService;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 @Component
 public class TaskScanner {
@@ -23,6 +26,10 @@ public class TaskScanner {
 
 	@Autowired
 	private TaskService taskService;
+
+	@Autowired
+	private ObjectMapper objectMapper;
+
 
 	@PostConstruct
 	public void startup(){
@@ -41,13 +48,12 @@ public class TaskScanner {
 			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 
 			for(Task task:tasks){
-				Map<String,Object> dataMap = new HashMap<>();
 
-				JSONObject jsonObject = (JSONObject)JSONObject.toJSON(task);
+				HashMap hashMap = objectMapper.convertValue(task, HashMap.class);
 
 				JobDetail jobDetail = JobBuilder.newJob(HttpTrigger.class)
 						.withIdentity(task.getId())
-						.setJobData(new JobDataMap(jsonObject))
+						.setJobData(new JobDataMap(hashMap))
 						.build();
 
 				CronTrigger cronTrigger = TriggerBuilder.

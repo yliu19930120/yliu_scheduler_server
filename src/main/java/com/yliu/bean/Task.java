@@ -4,7 +4,6 @@ import javax.persistence.Id;
 
 public class Task extends Bean{
 
-	private String server;
 	private String url;
 	private String cron;
 	private String taskName;
@@ -12,14 +11,6 @@ public class Task extends Bean{
 	 * 是否有效，0有效，1无效
 	 */
 	private String valid;
-
-	public String getServer() {
-		return server;
-	}
-
-	public void setServer(String server) {
-		this.server = server;
-	}
 
 	public String getUrl() {
 		return url;
