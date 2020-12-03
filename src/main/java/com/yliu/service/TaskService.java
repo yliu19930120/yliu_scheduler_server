@@ -7,14 +7,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yliu.bean.Task;
 import com.yliu.dao.TaskDao;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -34,8 +37,9 @@ public class TaskService {
     private List<Task> readTasks(){
 
         try {
-            File file = ResourceUtils.getFile("classpath:tasks.json");
-            String json = FileUtils.readFileToString(file);
+            ClassPathResource classPathResource = new ClassPathResource("tasks.json");
+            InputStream inputStream = classPathResource.getInputStream();
+            String json = IOUtils.toString(inputStream);
             JsonNode jsonNode = objectMapper.readTree(json);
 
             JsonNode taskNode = jsonNode.findValue("tasks");
