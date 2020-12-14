@@ -1,7 +1,9 @@
 package com.yliu.bean;
 
 import com.sun.org.apache.regexp.internal.RE;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "taskLog")
 public class TaskLog extends Bean{
 
     private String taskId;

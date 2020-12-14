@@ -1,7 +1,10 @@
 package com.yliu.bean;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Id;
 
+@Document(collection = "task")
 public class Task extends Bean{
 
 	private String url;
@@ -11,6 +14,10 @@ public class Task extends Bean{
 	 * 是否有效，0有效，1无效
 	 */
 	private String valid;
+	/**
+	 * 状态 0空闲,1运行中
+	 */
+	private String status;
 
 	public String getUrl() {
 		return url;
@@ -42,5 +49,13 @@ public class Task extends Bean{
 
 	public void setValid(String valid) {
 		this.valid = valid;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

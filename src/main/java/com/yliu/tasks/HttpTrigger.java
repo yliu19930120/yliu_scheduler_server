@@ -5,6 +5,7 @@ import com.yliu.bean.BaseResult;
 import com.yliu.bean.Task;
 import com.yliu.bean.TaskLog;
 import com.yliu.service.TaskLogService;
+import com.yliu.service.TaskService;
 import com.yliu.utils.SpringUtils;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class HttpTrigger implements Job {
         ObjectMapper objectMapper = SpringUtils.getBean(ObjectMapper.class);
         TaskLogService taskLogService = SpringUtils.getBean(TaskLogService.class);
         JobDataMap jobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
+
         try {
             Task task = objectMapper.convertValue(jobDataMap,Task.class);
             log.info("执行 task {} 发送请求到 {}",task.getTaskName(),task.getUrl());

@@ -10,6 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,6 +29,9 @@ public class TaskService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private final static Logger log = LoggerFactory.getLogger(TaskService.class);
 
@@ -61,4 +68,11 @@ public class TaskService {
     public List<Task> validTasks(){
         return taskDao.findAllByValidEquals("0");
     }
+
+    public void updateStatus(String taskId,String status){
+        Query query=Query.query(Criteria.where("id").is(taskId));
+        Update update = new Update().set("status", status);
+        mongoTemplate.updateFirst(query,update,Task.class);
+    }
+
 }
