@@ -1,6 +1,8 @@
 package com.yliu.controller;
 
 import com.yliu.bean.Result;
+import com.yliu.bean.TaskLog;
+import com.yliu.service.TaskLogService;
 import com.yliu.service.TaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +23,8 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private TaskLogService taskLogService;
 
     @ApiOperation(value = "task运行中")
     @PostMapping("/running")
@@ -36,5 +40,18 @@ public class TaskController {
         return Result.ok();
     }
 
+    @ApiOperation(value = "task失败")
+    @PostMapping("/failed")
+    public Result taskFailed(TaskLog taskLog){
+        taskLogService.writeLog(taskLog);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "task成功")
+    @PostMapping("/success")
+    public Result taskSucc(TaskLog taskLog){
+        taskLogService.writeLog(taskLog);
+        return Result.ok();
+    }
 
 }
