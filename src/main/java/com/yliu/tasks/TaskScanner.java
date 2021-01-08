@@ -64,7 +64,6 @@ public class TaskScanner {
 
 				Date date = cronTrigger.getFireTimeAfter(new Date());
 				scheduler.scheduleJob(jobDetail,cronTrigger);
-				log.info("时间 {}",date);
 				log.info("任务 [{}]下个运行时间为 {}",task.getTaskName(), DateFormatUtils.format(date,"yyyy-MM-dd HH:mm:ss", Locale.CHINA));
 			}
 

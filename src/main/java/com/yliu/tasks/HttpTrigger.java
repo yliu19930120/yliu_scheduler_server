@@ -33,26 +33,29 @@ public class HttpTrigger implements Job {
 
         try {
             Task task = objectMapper.convertValue(jobDataMap,Task.class);
-            log.info("执行 task {} 发送请求到 {}",task.getTaskName(),task.getUrl());
+
             RestTemplate restTemplate = new RestTemplate();
 
-            String url = String.format("%s?%s&%s",task.getUrl(),task.getId(),logId);
+            String url = String.format("%s?task_id=%s&log_id=%s",task.getUrl(),task.getId(),logId);
+
+            log.info("执行 task {} 发送请求到 {}",task.getTaskName(),url);
+
+            taskLogService.writeLog(TaskLog.of(task.getId(),logId)
+                    .status(TaskLog.FREED));
 
             BaseResult result = restTemplate.getForObject(url, BaseResult.class);
 
             if(result.getCode()!=200){
                 log.error("任务触发失败 {}",result.getMessage());
-                taskLogService.writeLog(TaskLog.of(task.getId(),logId)
+                taskLogService.updateLog(TaskLog.of(task.getId(),logId)
                         .msg(result.getMessage())
-                        .status(TaskLog.FAIL)
-                .objectName(HttpTrigger.class.getName()));
+                        .status(TaskLog.FAIL));
             }
         } catch (Exception e) {
             log.error("任务触发失败",e);
-            taskLogService.writeLog(TaskLog.of(jobDataMap.getString("id"),logId)
+            taskLogService.updateLog(TaskLog.of(jobDataMap.getString("id"),logId)
                     .msg(e.getMessage())
-                    .status(TaskLog.FAIL)
-                    .objectName(HttpTrigger.class.getName()));
+                    .status(TaskLog.FAIL));
         }
 
     }

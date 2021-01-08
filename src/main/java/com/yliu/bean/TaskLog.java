@@ -1,6 +1,5 @@
 package com.yliu.bean;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "taskLog")
@@ -10,29 +9,19 @@ public class TaskLog extends Bean{
     private String logId;
     private String taskName;
     private String msg;
-    private String objectName;
+
     /**
-     * 状态 1成功,0失败
+     * 状态 0空闲,1处理中,2处理成功,3处理失败
      */
     private String status;
 
-    public static final String SUCC = "1";
-    public static final String FAIL = "0";
+    public static final String FREED = "0";
+    public static final String RUNNING = "1";
+    public static final String SUCC = "2";
+    public static final String FAIL = "3";
+
 
     public TaskLog() {
-    }
-
-    public TaskLog(String taskId, String msg, String objectName) {
-        this.taskId = taskId;
-        this.msg = msg;
-        this.objectName = objectName;
-    }
-
-    public TaskLog(String taskId, String taskName, String msg, String objectName) {
-        this.taskId = taskId;
-        this.taskName = taskName;
-        this.msg = msg;
-        this.objectName = objectName;
     }
 
 
@@ -41,13 +30,7 @@ public class TaskLog extends Bean{
         this.logId = logId;
     }
 
-    public TaskLog(String taskId, String taskName, String msg, String objectName, String status) {
-        this.taskId = taskId;
-        this.taskName = taskName;
-        this.msg = msg;
-        this.objectName = objectName;
-        this.status = status;
-    }
+
 
     public String getLogId() {
         return logId;
@@ -81,14 +64,6 @@ public class TaskLog extends Bean{
         this.status = status;
     }
 
-    public String getObjectName() {
-        return objectName;
-    }
-
-    public void setObjectName(String objectName) {
-        this.objectName = objectName;
-    }
-
     public String getTaskName() {
         return taskName;
     }
@@ -97,7 +72,8 @@ public class TaskLog extends Bean{
         this.taskName = taskName;
     }
 
-    public static TaskLog of(String taskId,String logId){
+
+    public static TaskLog of(String taskId, String logId){
         TaskLog taskLog = new TaskLog(taskId,logId);
         return taskLog;
     }
@@ -112,8 +88,4 @@ public class TaskLog extends Bean{
         return this;
     }
 
-    public TaskLog objectName(String objectName){
-        this.setObjectName(objectName);
-        return this;
-    }
 }
