@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class TaskLog extends Bean{
 
     private String taskId;
+    private String logId;
     private String taskName;
     private String msg;
     private String objectName;
@@ -34,12 +35,26 @@ public class TaskLog extends Bean{
         this.objectName = objectName;
     }
 
+
+    public TaskLog(String taskId, String logId) {
+        this.taskId = taskId;
+        this.logId = logId;
+    }
+
     public TaskLog(String taskId, String taskName, String msg, String objectName, String status) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.msg = msg;
         this.objectName = objectName;
         this.status = status;
+    }
+
+    public String getLogId() {
+        return logId;
+    }
+
+    public void setLogId(String logId) {
+        this.logId = logId;
     }
 
     public String getTaskId() {
@@ -82,4 +97,23 @@ public class TaskLog extends Bean{
         this.taskName = taskName;
     }
 
+    public static TaskLog of(String taskId,String logId){
+        TaskLog taskLog = new TaskLog(taskId,logId);
+        return taskLog;
+    }
+
+    public TaskLog msg(String msg){
+        this.setMsg(msg);
+        return this;
+    }
+
+    public TaskLog status(String status){
+        this.setStatus(status);
+        return this;
+    }
+
+    public TaskLog objectName(String objectName){
+        this.setObjectName(objectName);
+        return this;
+    }
 }
