@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo_server:27017/yliu
+      uri: mongodb://admin:fasfmlmk23423@mongo_server:27017/yliu
 yliu:
   auth: false
   cross: false
