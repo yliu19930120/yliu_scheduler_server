@@ -41,7 +41,7 @@ public class HttpTrigger implements Job {
             log.info("执行 task {} 发送请求到 {}",task.getTaskName(),url);
 
             taskLogService.writeLog(TaskLog.of(task.getId(),logId)
-                    .status(TaskLog.FREED));
+                    .status(TaskLog.RUNNING));
 
             BaseResult result = restTemplate.getForObject(url, BaseResult.class);
 
@@ -59,4 +59,5 @@ public class HttpTrigger implements Job {
         }
 
     }
+
 }

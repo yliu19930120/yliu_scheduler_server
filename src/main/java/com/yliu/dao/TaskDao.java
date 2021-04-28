@@ -10,4 +10,5 @@ public interface TaskDao extends MongoRepository<Task,String> {
 
     List<Task> findAllByValidEquals(String valid);
 
+    void deleteAllByIdIn(List<String> ids);
 }
